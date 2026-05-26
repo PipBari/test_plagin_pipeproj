@@ -1,6 +1,8 @@
 package ru.test_pipe.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import ru.test_pipe.service.AuthService;
 
 @Controller
 public class AuthController {
+
+    private static final Logger logger = LogManager.getLogger(AuthController.class);
 
     private final AuthService authService;
 
@@ -48,11 +52,13 @@ public class AuthController {
     }
 
     private String loginSuccessfully(User user, HttpSession session) {
+        logger.info("User logged in: {}", user.getUsername());
         session.setAttribute("currentUser", user);
         return "redirect:/home";
     }
 
     private String loginFailed(Model model) {
+        logger.warn("Failed login attempt");
         model.addAttribute("loginRequest", new LoginRequest());
         model.addAttribute("error", "Неверный логин или пароль");
         return "login";
