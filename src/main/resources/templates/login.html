@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<main class="auth-page">
+    <section class="auth-panel">
+        <h1>Вход</h1>
+        <form th:action="@{/login}" th:object="${loginRequest}" method="post" class="auth-form">
+            <label>
+                Логин
+                <input type="text" th:field="*{username}" autocomplete="username" required autofocus>
+            </label>
+
+            <label>
+                Пароль
+                <input type="password" th:field="*{password}" autocomplete="current-password" required>
+            </label>
+
+            <p class="error" th:if="${error}" th:text="${error}"></p>
+
+            <button type="submit">Войти</button>
+        </form>
+        <p class="hint">Тестовый пользователь: admin / 12345</p>
+    </section>
+</main>
+</body>
+</html>
